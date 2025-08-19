@@ -16,13 +16,13 @@ They will:
 // 📦 Starting Dataset: Product List
 // ============================================
 
-const products = [
-  { name: "Laptop", price: 1000, inStock: true },
-  { name: "Phone", price: 500, inStock: false },
-  { name: "Tablet", price: 800, inStock: true },
-  { name: "Monitor", price: 300, inStock: true },
-  { name: "Keyboard", price: 100, inStock: false },
-];
+// const products = [
+//   { name: "Laptop", price: 1000, inStock: true },
+//   { name: "Phone", price: 500, inStock: false },
+//   { name: "Tablet", price: 800, inStock: true },
+//   { name: "Monitor", price: 300, inStock: true },
+//   { name: "Keyboard", price: 100, inStock: false },
+// ];
 
 // ============================================
 // 🔧 Tasks
@@ -43,6 +43,18 @@ Step-by-Step:
 2. Use the `filter()` method to apply the callback to the array.
 3. Return the filtered result.
 */
+const products = [
+  { name: "Laptop", price: 1000, inStock: true },
+  { name: "Phone", price: 500, inStock: false },
+  { name: "Tablet", price: 800, inStock: true },
+  { name: "Monitor", price: 300, inStock: true },
+  { name: "Keyboard", price: 100, inStock: false },
+];
+
+const filterProducts = (products, callback) => {
+  return products.filter(callback);
+}
+let inStockTrue = filterProducts(products, product => product.inStock);
 
 
 /*
@@ -55,7 +67,7 @@ Step-by-Step:
 2. Extract and transform the `name` property to uppercase.
 3. Store the result in a new variable.
 */
-
+const uppName = products.map(product => product.name.toUpperCase());
 
 /*
 🔹 Task 3: Generate Discounted Prices
@@ -69,7 +81,14 @@ Step-by-Step:
 2. Return a new function that takes a product object.
 3. Use this returned function inside a `map()` call to apply discounts to all products.
 */
-
+function applyDiscount(discountPercent) {
+  return function(product) {
+    const discount = product.price - (product.price * (discountPercent / 100));
+    const rounded = Math.round(discount * 100) / 100;
+    return { ...product, price: rounded };
+  }
+}
+const discountedProducts = products.map(applyDiscount(15));
 
 /*
 🔹 Task 4: Calculate Total Inventory Value
@@ -82,12 +101,32 @@ Step-by-Step:
 3. Store the total in a new variable.
 */
 
+// const products = [
+//   { name: "Laptop", price: 1000, inStock: true },
+//   { name: "Phone", price: 500, inStock: false },
+//   { name: "Tablet", price: 800, inStock: true },
+//   { name: "Monitor", price: 300, inStock: true },
+//   { name: "Keyboard", price: 100, inStock: false },
+// ];
+const totalValue = products.reduce((stockSum, product) => {
+  if (product.inStock) {
+    return stockSum + product.price;
+  }
+  return stockSum;
+}, 0);
 
 // ============================================
 // 🧪 Console Test Your Work
 // ============================================
 
-// console.log("Filtered products:", ...);
-// console.log("Uppercased names:", ...);
-// console.log("Discounted products:", ...);
-// console.log("Total value in stock:", ...);
+let line = "-".repeat(50);
+let newline = "\n";
+console.log(line + newline + line);
+console.log("Filtered products:", inStockTrue);
+console.log(line + newline + line);
+console.log("Uppercased names:", uppName);
+console.log(line + newline + line);
+console.log("Discounted products:", discountedProducts);
+console.log(line + newline + line);
+console.log("Total value in stock:", totalValue);
+console.log(line + newline + line);
