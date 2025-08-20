@@ -54,7 +54,7 @@ const products = [
 const filterProducts = (products, callback) => {
   return products.filter(callback);
 }
-let inStockTrue = filterProducts(products, product => product.inStock);
+let isInStock = filterProducts(products, product => product.inStock);
 
 
 /*
@@ -82,13 +82,13 @@ Step-by-Step:
 3. Use this returned function inside a `map()` call to apply discounts to all products.
 */
 function applyDiscount(discountPercent) {
-  return function(product) {
+  return function (product) {
     const discount = product.price - (product.price * (discountPercent / 100));
     const rounded = Math.round(discount * 100) / 100;
     return { ...product, price: rounded };
   }
 }
-const discountedProducts = products.map(applyDiscount(15));
+const discountedProducts = products.map(applyDiscount(10));
 
 /*
 🔹 Task 4: Calculate Total Inventory Value
@@ -122,7 +122,7 @@ const totalValue = products.reduce((stockSum, product) => {
 let line = "-".repeat(50);
 let newline = "\n";
 console.log(line + newline + line);
-console.log("Filtered products:", inStockTrue);
+console.log("Filtered products:", isInStock);
 console.log(line + newline + line);
 console.log("Uppercased names:", uppName);
 console.log(line + newline + line);
